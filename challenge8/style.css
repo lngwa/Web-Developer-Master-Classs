@@ -1,0 +1,32 @@
+body, html{
+	width: 100%;
+  	height: 100%;
+  	font-family: 'Chicle', cursive;
+  background: url(bg.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.container {
+	width: 100%
+}
+
+h1 {
+	font-size: 8vmax;
+}
+
+.welcome {	
+	color: yellow;
+	background-color: rgba(0,0,0,0.3);
+	height: 100%;
+	padding: 0px auto;
+	margin-right: 0px;
+}
+
+.welcome:hover {
+	transition: all 2s ease-in-out;
+	background-color: rgba(0,0,0,0.7);
+	color: white;
+}
