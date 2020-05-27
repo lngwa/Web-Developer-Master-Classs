@@ -22,7 +22,6 @@ h1 {
 	height: 100%;
 	padding: 0px auto;
 	margin-right: 0px;
-	border-width: 0px 0px 0px 5px;
 	background-image: linear-gradient(to left, rgba(0,0,0,0.6), rgba(0,0,0,0.5), rgba(0,0,0,0.5), rgba(0,0,0,0.5), rgba(0,0,0,0.5), rgba(0,0,0,0.5), rgba(0,0,0,0.5), rgba(0,0,0,0.01));
 }
 
@@ -38,7 +37,7 @@ h1 {
 	border-width: 0px 10px 15px 0px;
 	padding: 30px;
 	display: inline-block;
-	animation: glow 1s infinite;
+	animation: glow 2s infinite;
 }
 
 .arrow-1 {
@@ -67,9 +66,9 @@ h1 {
 	0% {
 		border: solid black;
 		border-width: 0px 10px 15px 0px;
-	padding: 1rem;
-	display: inline-block;
-	opacity: 0.5;
+		padding: 1rem;
+		display: inline-block;
+		opacity: 0.5;
 	}
 	50% {
 		border: solid yellow;
@@ -78,13 +77,21 @@ h1 {
 		display: inline-block;
 		opacity: 0.75;
 	}
+	75% {
+		border: solid yellow;
+		box-shadow: 14px 14px 12px white;
+		border-width: 0px 10px 15px 0px;
+		padding: 2rem;
+		display: inline-block;
+		opacity: 1;
+	}
 	100% {
 		border: solid yellow;
 		box-shadow: 14px 14px 12px white;
 		border-width: 0px 10px 15px 0px;
-	padding: 2rem;
-	display: inline-block;
-		opacity: 1;
+		padding: 1.5rem;
+		display: inline-block;
+		opacity: 0.75;
 	}
 
 }
