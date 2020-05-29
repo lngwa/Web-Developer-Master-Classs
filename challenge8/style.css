@@ -35,25 +35,25 @@ h1 {
 	margin-top: 18vh;
 	border: solid black;
 	border-width: 0px 10px 15px 0px;
-	padding: 30px;
 	display: inline-block;
 	animation: glow 2s infinite;
 }
 
+img {
+	height: 100%;
+	opacity: 0;
+}
+
 .arrow-1 {
-	animation-delay: 1s;
 	opacity: 1;
 }
 .arrow-2 {
-	animation-delay: 1s
 	opacity: 0.75;
 }
 .arrow-3 {
-	animation-delay: 1s
 	opacity: 0.5;
 }
 .arrow-4 {
-	animation-delay: 1s
 	opacity: 0.0;
 }
 
@@ -65,31 +65,35 @@ h1 {
 @keyframes glow {
 	0% {
 		border: solid black;
-		border-width: 0px 10px 15px 0px;
-		padding: 1rem;
+		border-width: 0px 16px 16px 0px;
+		width: 5vw;
+		height: 5vw;
 		display: inline-block;
 		opacity: 0.5;
 	}
 	50% {
 		border: solid yellow;
-		border-width: 0px 10px 15px 0px;
-		padding: 1.5rem;
+		border-width: 0px 12px 12px 0px;
+		width: 6vw;
+		height: 6vw;
 		display: inline-block;
 		opacity: 0.75;
 	}
 	75% {
 		border: solid yellow;
 		box-shadow: 14px 14px 12px white;
-		border-width: 0px 10px 15px 0px;
-		padding: 2rem;
+		border-width: 0px 7px 7px 0px;
+		width: 5vw;
+		height: 5vw;
 		display: inline-block;
 		opacity: 1;
 	}
 	100% {
 		border: solid yellow;
 		box-shadow: 14px 14px 12px white;
-		border-width: 0px 10px 15px 0px;
-		padding: 1.5rem;
+		border-width: 0px 8px 8px 0px;
+		width: 5vw;
+		height: 5vw;
 		display: inline-block;
 		opacity: 0.75;
 	}
