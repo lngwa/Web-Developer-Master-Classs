@@ -36,7 +36,14 @@ class App extends Component {
 			imgUrl: "https://samples.clarifai.com/metro-north.jpg",
 			faceBox: [],
 			route: 'signin',
-			isSignedIn: false
+			isSignedIn: false,
+			user: {
+				id: '',
+				name: '',
+				email: '',
+				entries: 0,
+				joined: ''
+			}
 		};
 	}
 
@@ -76,11 +83,27 @@ class App extends Component {
 			() => {
 				app.models
 					.predict(Clarifai.FACE_DETECT_MODEL, this.state.imgUrl)
-					.then((response) =>
-						this.displayFaceBox(
-							this.calculateFaceLocation(response)
-						)
-					)
+					.then((response) => {
+						console.log(response);
+						if(response){
+							fetch('http://localhost:3001/image', {
+								method: 'put',
+								headers: {'Content-Type': 'application/json'},
+								body: JSON.stringify({
+									id: this.state.user.id
+								})
+							})
+							.then(res => res.json())
+							.then(entry => {
+								if(entry){
+									this.setState({user: {...this.state.user, entries: entry}})
+								}
+							})
+							this.displayFaceBox(
+								this.calculateFaceLocation(response)
+							)
+						}
+					})
 					.catch((err) => console.log(err));
 			}
 		);
@@ -96,6 +119,10 @@ class App extends Component {
 		this.setState({route: route})
 	}
 
+	updateProfile = (data) => {
+		this.setState({user: data})
+	}
+
 	render() {
 		const st = this.state.route;
 		return (
@@ -107,11 +134,11 @@ class App extends Component {
 				{	
 					
 					(st === 'signin') ?
-							<SignIn onRouteChange={this.onRouteChange}/>
+							<SignIn updateProfile={this.updateProfile} onRouteChange={this.onRouteChange}/>
 					: (st === 'register') ? 
-							<Register onRouteChange={this.onRouteChange}/>
+							<Register updateProfile={this.updateProfile} onRouteChange={this.onRouteChange}/>
 						: <Fragment><Logo />
-								<Rank />
+								<Rank name={this.state.user.name} rank={this.state.user.entries} />
 								<ImageLinkForm
 									onInputChange={this.onInputChange}
 									onButtonClick={this.onButtonClick}

@@ -1,10 +1,51 @@
-import React from "react";
+import React, { Component } from "react";
 
-const SignIn = ({onRouteChange}) => {
-	return (
+class SignIn extends Component {
+	constructor(props){
+		super(props);
+		this.state = {
+			emailField: '',
+			passwordField: ''
+		}
+
+	}
+
+	onEmailFieldChange = (event) => {
+		this.setState({emailField: event.target.value})
+	}
+
+	onPasswordFieldChange = (event) => {
+		this.setState({passwordField: event.target.value})
+	}
+
+	onSignIn = () => {
+		fetch("http://localhost:3001/signin", {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				'email': this.state.emailField,
+				'password': this.state.passwordField
+			})
+		})
+		.then(response => response.json())
+		.then(data => {
+				if(data.id){
+					this.props.updateProfile(data);
+					this.props.onRouteChange('home');
+				}
+			}
+		);
+	}
+
+
+	render(){
+		const {onRouteChange} = this.props;
+		return (
 		<article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l shadow-5 mw5 center">
 			<main className="pa4 black-80">
-				<form className="measure">
+				<div className="measure">
 					<fieldset
 						id="sign_up"
 						className="ba b--transparent ph0 mh0"
@@ -22,6 +63,7 @@ const SignIn = ({onRouteChange}) => {
 								type="email"
 								name="email-address"
 								id="email-address"
+								onChange={this.onEmailFieldChange}
 							/>
 						</div>
 						<div className="mv3">
@@ -33,12 +75,13 @@ const SignIn = ({onRouteChange}) => {
 								type="password"
 								name="password"
 								id="password"
+								onChange={this.onPasswordFieldChange}
 							/>
 						</div>
 					</fieldset>
 					<div className="">
 						<input
-							onClick={() => onRouteChange('home')}
+							onClick={this.onSignIn}
 							className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
 							type="submit"
 							value="Sign in"
@@ -49,10 +92,13 @@ const SignIn = ({onRouteChange}) => {
 							Register
 						</p>
 					</div>
-				</form>
+				</div>
 			</main>
 		</article>
 	);
+
+	}
+	
 };
 
 export default SignIn;
