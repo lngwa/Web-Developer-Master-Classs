@@ -15,7 +15,7 @@ const Face = ({imgUrl, regions}) => {
 	return (
 			<div className='center ma'>
 				<div className='absolute mt2'>
-					<img id='inputimage' alt="Face" src={imgUrl} width='500px' height='auto'/>
+					{imgUrl.length > 0 ? <img id='inputimage' alt="Face" src={imgUrl} width='500px' height='auto'/> : ''}
 					{boxes}
 				</div>
 			</div>

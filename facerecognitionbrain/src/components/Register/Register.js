@@ -6,7 +6,8 @@ class Register extends Component{
 		this.state = {
 			name: '',
 			email: '',
-			password: ''
+			password: '',
+			error: ''
 		}
 	}
 
@@ -28,9 +29,12 @@ class Register extends Component{
 		})
 		.then(res => res.json())
 		.then(user => {
-			if(user){				
+			if(user.id){				
 				this.props.updateProfile(user);			
 				this.props.onRouteChange('home');
+			}
+			else{
+				this.setState({error: 'Invalid form submission. Try again!'})
 			}
 		})
 		.catch(err => {
@@ -48,6 +52,8 @@ class Register extends Component{
 						className="ba b--transparent ph0 mh0"
 					>
 						<legend className="f4 fw6 ph0 mh0">Register</legend>
+						
+					<em style={{color: 'red'}}>{this.state.error}</em>
 						<div className="mt3">
 							<label
 								className="db fw6 lh-copy f6"

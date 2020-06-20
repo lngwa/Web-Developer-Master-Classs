@@ -8,11 +8,6 @@ import SignIn from "./components/SignIn/SignIn";
 import Register from "./components/Register/Register";
 import Particles from "react-particles-js";
 import "./App.css";
-import Clarifai from "clarifai";
-
-const app = new Clarifai.App({
-	apiKey: "4ea42f77b34d4627a91a1bcbe614da78",
-});
 
 const particleOptions = {
 	particles: {
@@ -28,14 +23,11 @@ const particleOptions = {
 	},
 };
 
-class App extends Component {
-	constructor() {
-		super();
-		this.state = {
+const initialState = {
 			input: "",
-			imgUrl: "https://samples.clarifai.com/metro-north.jpg",
+			imgUrl: "",
 			faceBox: [],
-			route: 'signin',
+			route: 'signout',
 			isSignedIn: false,
 			user: {
 				id: '',
@@ -45,6 +37,11 @@ class App extends Component {
 				joined: ''
 			}
 		};
+
+class App extends Component {
+	constructor() {
+		super();
+		this.state = initialState;
 	}
 
 	onInputChange = (event) => {
@@ -81,10 +78,15 @@ class App extends Component {
 				return { ...state, imgUrl: this.state.input };
 			},
 			() => {
-				app.models
-					.predict(Clarifai.FACE_DETECT_MODEL, this.state.imgUrl)
+				fetch('http://localhost:3001/face', {
+					method: 'post',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({imgUrl: this.state.imgUrl})
+				})
+				.then(response => response.json())
 					.then((response) => {
-						console.log(response);
 						if(response){
 							fetch('http://localhost:3001/image', {
 								method: 'put',
@@ -113,8 +115,8 @@ class App extends Component {
 		if(route === 'home'){
 			this.setState({isSignedIn: true})
 		}
-		else{
-			this.setState({isSignedIn: false})
+		else if (route === 'signout'){
+			this.setState(initialState);
 		}
 		this.setState({route: route})
 	}
@@ -133,7 +135,7 @@ class App extends Component {
 								
 				{	
 					
-					(st === 'signin') ?
+					(st === 'signout') ?
 							<SignIn updateProfile={this.updateProfile} onRouteChange={this.onRouteChange}/>
 					: (st === 'register') ? 
 							<Register updateProfile={this.updateProfile} onRouteChange={this.onRouteChange}/>

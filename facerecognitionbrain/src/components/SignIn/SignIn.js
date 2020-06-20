@@ -5,7 +5,8 @@ class SignIn extends Component {
 		super(props);
 		this.state = {
 			emailField: '',
-			passwordField: ''
+			passwordField: '',
+			error: ''
 		}
 
 	}
@@ -32,8 +33,12 @@ class SignIn extends Component {
 		.then(response => response.json())
 		.then(data => {
 				if(data.id){
+					this.setState({error: ''})
 					this.props.updateProfile(data);
 					this.props.onRouteChange('home');
+				}
+				else{
+					this.setState({error: 'Wrong credentials'})
 				}
 			}
 		);
@@ -78,6 +83,7 @@ class SignIn extends Component {
 								onChange={this.onPasswordFieldChange}
 							/>
 						</div>
+					<em style={{color: 'red'}}>{this.state.error}</em>
 					</fieldset>
 					<div className="">
 						<input
